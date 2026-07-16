@@ -1,26 +1,32 @@
-# FastAPI Hello API
+# FastAPI Book CRUD API
 
-部署到 Render 後，呼叫根路徑會回傳：
+This project exposes a `book` table CRUD API with FastAPI and SQLAlchemy.
 
-```json
-{"message": "Hello"}
-```
+## Endpoints
 
-## 本機執行
+- `GET /` redirects to Swagger UI at `/docs`
+- `GET /hello`
+- `GET /api`
+- `POST /books`
+- `GET /books`
+- `GET /books/{book_id}`
+- `PUT /books/{book_id}`
+- `DELETE /books/{book_id}`
+
+## Local Run
 
 ```bash
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-開啟 <http://127.0.0.1:8000/>。
+If `DATABASE_URL` is not set, the app uses local SQLite at `books.db`.
 
-API 文件位於 <http://127.0.0.1:8000/docs>。
+## Render PostgreSQL
 
-## 部署到 Render
+1. Create a PostgreSQL database in Render.
+2. Copy the Internal Database URL or External Database URL.
+3. Set it as the `DATABASE_URL` environment variable on your Render web service.
+4. Deploy the app. On startup, FastAPI will create the `book` table automatically.
 
-1. 把本專案上傳至 GitHub repository。
-2. 登入 Render，選擇 **New > Blueprint**。
-3. 連接該 GitHub repository。
-4. Render 會讀取 `render.yaml` 並建立 Web Service。
-5. 部署完成後，開啟 Render 提供的網址即可看到回傳結果。
+The app converts Render-style `postgres://...` URLs to the SQLAlchemy `postgresql+psycopg://...` format automatically.
